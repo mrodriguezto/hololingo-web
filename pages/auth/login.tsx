@@ -30,7 +30,7 @@ const LoginPage: NextPage = () => {
             <Image
               src="/images/hlingo.png"
               alt="HoloLingo logo"
-              width={40}
+              width={48}
               height={80}
             />
             <Typography fontSize={16} fontWeight={700}>

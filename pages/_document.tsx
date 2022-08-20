@@ -21,6 +21,7 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
+          <link rel="icon" type="image/x-icon" href="/logo.png" />
         </Head>
         <body>
           <Main />
