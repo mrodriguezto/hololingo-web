@@ -1,4 +1,4 @@
-import { Grow } from '@mui/material';
+import { CssBaseline, Grow } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';
@@ -17,6 +17,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         autoHideDuration={2000}
         TransitionComponent={Grow}
       >
+        <CssBaseline />
         <Component {...pageProps} />
       </SnackbarProvider>
     </ThemeProvider>

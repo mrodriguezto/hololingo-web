@@ -1,7 +1,17 @@
+import { GetServerSideProps } from 'next';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
-  return <div>a</div>;
+  return <></>;
+};
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  return {
+    redirect: {
+      destination: '/auth/login',
+      permanent: true,
+    },
+  };
 };
 
 export default Home;
