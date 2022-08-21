@@ -9,4 +9,6 @@ type ContextProps = {
   // logout: () => void;
 };
 
-export const AuthContext = createContext({} as ContextProps);
+const AuthContext = createContext({} as ContextProps);
+
+export default AuthContext;

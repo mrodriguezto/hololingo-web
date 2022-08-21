@@ -9,18 +9,11 @@ export const checkUserEmailPassword = async (email: string, password: string) =>
 
   await db.disconnect();
 
-  if (!user) {
+  if (!user || user.role !== 'admin') {
     return null;
   }
 
   if (!bcrypt.compareSync(password, user.password!)) return null;
 
-  const { role, name, _id } = user;
-
-  return {
-    _id,
-    email: email.toLocaleLowerCase(),
-    role,
-    name,
-  };
+  return user;
 };

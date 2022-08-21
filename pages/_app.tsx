@@ -1,5 +1,7 @@
 import { CssBaseline, Grow } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import AuthProvider from 'context/auth/AuthProvider';
+import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';
 import { customTheme } from 'themes/custom-theme';
@@ -7,20 +9,24 @@ import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={customTheme}>
-      <SnackbarProvider
-        maxSnack={3}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        autoHideDuration={2000}
-        TransitionComponent={Grow}
-      >
-        <CssBaseline />
-        <Component {...pageProps} />
-      </SnackbarProvider>
-    </ThemeProvider>
+    <SessionProvider>
+      <ThemeProvider theme={customTheme}>
+        <SnackbarProvider
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          autoHideDuration={2000}
+          TransitionComponent={Grow}
+        >
+          <AuthProvider>
+            <CssBaseline />
+            <Component {...pageProps} />
+          </AuthProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </SessionProvider>
   );
 }
 

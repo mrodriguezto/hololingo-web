@@ -17,8 +17,6 @@ export default NextAuth({
         },
       },
       async authorize(credentials) {
-        console.log({ credentials });
-
         return await checkUserEmailPassword(
           credentials!.email,
           credentials!.password,
@@ -48,7 +46,6 @@ export default NextAuth({
         }
       }
 
-      console.log({ token, account, user });
       return token;
     },
     async session({ session, token, user }) {

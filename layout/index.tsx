@@ -9,10 +9,12 @@ type Props = {
 };
 
 const Layout = ({ children, pageTitle, pageDescription }: Props) => {
+  const title = `${pageTitle} | HoloLingo`;
+
   return (
     <>
       <Head>
-        <title>{pageTitle}</title>
+        <title>{title}</title>
 
         <meta name="description" content={pageDescription} />
       </Head>
