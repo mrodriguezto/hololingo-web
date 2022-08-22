@@ -3,10 +3,10 @@ import { ILesson } from 'interfaces';
 
 const lessonSchema = new Schema(
   {
+    title: { type: String, required: true },
     description: { type: String, required: true },
     example: { type: String, required: true },
-    date_created: { type: Date, required: true },
-    category: { type: String },
+    category_name: { type: String },
   },
   {
     timestamps: true,
