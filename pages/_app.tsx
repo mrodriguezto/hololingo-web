@@ -1,6 +1,7 @@
 import { CssBaseline, Grow } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import AuthProvider from 'context/auth/AuthProvider';
+import UIProvider from 'context/ui/UIProvider';
 import { SessionProvider } from 'next-auth/react';
 import type { AppProps } from 'next/app';
 import { SnackbarProvider } from 'notistack';
@@ -21,8 +22,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           TransitionComponent={Grow}
         >
           <AuthProvider>
-            <CssBaseline />
-            <Component {...pageProps} />
+            <UIProvider>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </UIProvider>
           </AuthProvider>
         </SnackbarProvider>
       </ThemeProvider>

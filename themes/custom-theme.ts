@@ -62,6 +62,10 @@ export const customTheme = createTheme({
           fontSize: 16,
           fontWeight: 600,
         },
+        body2: {
+          fontSize: 12,
+          color: 'grey',
+        },
       },
     },
     MuiButton: {

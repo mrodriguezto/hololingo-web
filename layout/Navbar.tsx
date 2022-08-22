@@ -1,9 +1,15 @@
 import NextLink from 'next/link';
-import { Toolbar, AppBar, Link, Typography, IconButton, Box } from '@mui/material';
+import { Toolbar, AppBar, Link, Typography, Box, Button } from '@mui/material';
 import { MenuOutlined } from '@mui/icons-material';
 import Image from 'next/image';
+import { useContext } from 'react';
+import UIContext from 'context/ui/UIContext';
+import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
+  const { toggleSideMenu } = useContext(UIContext);
+  const { status } = useSession();
+
   return (
     <AppBar>
       <Toolbar>
@@ -16,9 +22,11 @@ const Navbar = () => {
           </Link>
         </NextLink>
         <Box sx={{ flex: 1 }} />
-        <IconButton aria-label="Menú" onClick={() => {}} color="secondary">
-          <MenuOutlined sx={{ color: 'white' }} />
-        </IconButton>
+        {status === 'authenticated' && (
+          <Button aria-label="Menú" onClick={toggleSideMenu} color="secondary">
+            <MenuOutlined sx={{ color: 'white' }} />
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );

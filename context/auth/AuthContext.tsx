@@ -6,7 +6,7 @@ type ContextProps = {
   user?: IUser;
 
   // loginUser: (email: string, password: string) => Promise<boolean>;
-  // logout: () => void;
+  logout: () => void;
 };
 
 const AuthContext = createContext({} as ContextProps);

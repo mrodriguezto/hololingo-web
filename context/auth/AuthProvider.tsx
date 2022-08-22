@@ -1,6 +1,8 @@
-import { IUser } from 'interfaces';
-import { useSession } from 'next-auth/react';
 import { useEffect, useReducer } from 'react';
+import { useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
+
+import { IUser } from 'interfaces';
 import AuthContext from './AuthContext';
 import authReducer from './authReducer';
 
@@ -24,10 +26,16 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [status, data]);
 
+  const logout = () => {
+    signOut();
+    dispatch({ type: 'logout' });
+  };
+
   return (
     <AuthContext.Provider
       value={{
         ...state,
+        logout,
       }}
     >
       {children}
