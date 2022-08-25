@@ -72,7 +72,6 @@ const LoginPage: NextPage = () => {
               <TextField
                 label="Correo"
                 type="email"
-                variant="outlined"
                 fullWidth
                 {...register('email')}
                 error={!!errors.email}
@@ -81,7 +80,6 @@ const LoginPage: NextPage = () => {
               <TextField
                 label="Contraseña"
                 type="password"
-                variant="outlined"
                 fullWidth
                 {...register('password')}
                 error={!!errors.password}
