@@ -1,27 +1,40 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
-import { IUser } from 'interfaces';
-import { validations } from 'utils/validations';
-import db from 'api/db';
-import User from 'api/models/User';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 
-type Data = { message: string } | IUser;
+import db from 'api/db';
+import User from 'api/models/User';
+import { IUser } from 'interfaces';
+import { validations } from 'utils/validations';
+
+type Data = { message: string } | IUser | IUser[];
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  if (process.env.NODE_ENV !== 'development') {
-    return res.status(400).json({
-      message: 'Only allowed on development',
-    });
-  }
-
   switch (req.method) {
+    case 'GET':
+      return getUsers(req, res);
     case 'POST':
       return registerUser(req, res);
 
     default:
       res.status(400).json({ message: 'Bad Request' });
   }
+}
+
+async function getUsers(req: NextApiRequest, res: NextApiResponse<Data>) {
+  await db.connect();
+  let users;
+  try {
+    users = await User.find().lean();
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      message: 'Something went wrong',
+    });
+  }
+  await db.disconnect();
+
+  return res.status(200).json(users);
 }
 
 type RegisterBody = {
