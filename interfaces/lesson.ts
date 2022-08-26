@@ -9,3 +9,7 @@ export interface ILesson extends INewLesson {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IExtendedLesson extends ILesson {
+  id: number;
+}

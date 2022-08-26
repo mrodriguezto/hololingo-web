@@ -1,36 +1,64 @@
-import { ILesson } from '../../interfaces/lesson';
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Stack,
   TextField,
 } from '@mui/material';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { INewLesson, IExtendedLesson } from 'interfaces/lesson';
+import { useEffect } from 'react';
 
 type Props = {
   open: boolean;
-  lesson?: ILesson;
+  lesson?: IExtendedLesson;
   handleClose: () => void;
-  handleSave: () => void;
+  handleSave: (lesson: INewLesson) => void;
 };
 
 const LessonDialog = ({ open, lesson, handleClose, handleSave }: Props) => {
-  const edit: boolean = !!lesson;
+  console.log(lesson);
+
+  const { register, handleSubmit, reset } = useForm<INewLesson>({
+    defaultValues: {},
+  });
+
+  const onSubmit: SubmitHandler<INewLesson> = data => {
+    handleSave(data);
+  };
+
+  useEffect(() => {
+    if (lesson) reset(lesson);
+  }, [lesson, reset]);
 
   return (
     <Dialog fullWidth onClose={handleClose} open={open}>
       <DialogTitle>
-        {edit ? `Editar Lección ${lesson!._id}` : 'Nueva Lección'}
+        {lesson ? `Editar Lección ${lesson!._id}` : 'Nueva Lección'}
       </DialogTitle>
       <DialogContent>
         <Stack spacing={3} paddingY={2}>
-          <TextField label="Titulo" type="text" fullWidth />
-          <TextField label="Descripción" type="text" fullWidth />
-          <TextField label="Categoría" type="text" fullWidth />
-          <TextField label="Video de ejemplo (URL)" type="text" fullWidth />
+          <TextField label="Titulo" type="text" fullWidth {...register('title')} />
+          <TextField
+            label="Descripción"
+            type="text"
+            fullWidth
+            {...register('description')}
+          />
+          <TextField
+            label="Categoría"
+            type="text"
+            fullWidth
+            {...register('category_name')}
+          />
+          <TextField
+            label="Video de ejemplo (URL)"
+            type="text"
+            fullWidth
+            {...register('example')}
+          />
         </Stack>
       </DialogContent>
 
@@ -38,7 +66,7 @@ const LessonDialog = ({ open, lesson, handleClose, handleSave }: Props) => {
         <Button variant="text" onClick={handleClose}>
           Cancelar
         </Button>
-        <Button onClick={handleSave} autoFocus>
+        <Button onClick={handleSubmit(onSubmit)} autoFocus>
           Guardar
         </Button>
       </DialogActions>

@@ -18,7 +18,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 }
 
 async function getLessons(req: NextApiRequest, res: NextApiResponse<Data>) {
-  await db.connect;
+  await db.connect();
   let lessons;
   try {
     lessons = await Lesson.find().lean();

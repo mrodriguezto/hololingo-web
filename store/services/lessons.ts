@@ -8,12 +8,12 @@ export const lessonsApi = createApi({
   baseQuery: baseQuery('/lessons'),
   endpoints: builder => ({
     getLessons: builder.query<ILesson[], void>({
-      query: () => '/',
+      query: () => '',
       providesTags: result => providesList(result, 'Lessons'),
     }),
     addLesson: builder.mutation<ILesson, INewLesson>({
       query: body => ({
-        url: '/',
+        url: '',
         method: 'POST',
         body,
       }),

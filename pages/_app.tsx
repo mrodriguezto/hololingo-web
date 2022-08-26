@@ -14,26 +14,26 @@ import '../styles/globals.css';
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider>
-      <ThemeProvider theme={customTheme}>
-        <SnackbarProvider
-          maxSnack={3}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-          }}
-          autoHideDuration={2000}
-          TransitionComponent={Grow}
-        >
-          <Provider store={store}>
+      <Provider store={store}>
+        <ThemeProvider theme={customTheme}>
+          <SnackbarProvider
+            maxSnack={3}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'right',
+            }}
+            autoHideDuration={2000}
+            TransitionComponent={Grow}
+          >
             <AuthProvider>
               <UIProvider>
                 <CssBaseline />
                 <Component {...pageProps} />
               </UIProvider>
             </AuthProvider>
-          </Provider>
-        </SnackbarProvider>
-      </ThemeProvider>
+          </SnackbarProvider>
+        </ThemeProvider>
+      </Provider>
     </SessionProvider>
   );
 }
