@@ -80,12 +80,6 @@ const SideMenu = () => {
             </ListItemIcon>
             <ListItemText primary={'Lecciones'} />
           </ListItem>
-          <ListItem button onClick={() => navigateTo('/grades')}>
-            <ListItemIcon>
-              <GradingOutlined />
-            </ListItemIcon>
-            <ListItemText primary={'Calificaciones'} />
-          </ListItem>
           <Divider />
           <ListItem button onClick={handleSignout}>
             <ListItemIcon>
