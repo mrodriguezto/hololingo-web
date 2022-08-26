@@ -1,25 +1,22 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
-import { GetServerSideProps } from 'next';
 import { Button, Stack, Typography } from '@mui/material';
 import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-grid';
 import { Delete, Edit } from '@mui/icons-material';
 
 import Layout from 'layout';
 import { ILesson } from 'interfaces';
-import { getLessons } from 'api/functions/lessons';
 import Table from 'components/Table';
 import DeleteDialog from 'components/DeleteDialog';
 import useDialogs from 'hooks/useDialogs';
 import formatDate from 'utils/formatDate';
 import LessonDialog from 'components/lessons/LessonDialog';
+import { useGetLessonsQuery } from 'store/services/lessons';
+import Loader from 'components/Loader';
 
-type Props = {
-  lessons: ILesson[];
-};
-
-const LessonsPage: NextPage<Props> = ({ lessons }) => {
+const LessonsPage: NextPage = () => {
   const [currentLesson, setCurrentLesson] = useState<ILesson>();
+  const { data: lessons = [], isLoading } = useGetLessonsQuery();
 
   const {
     openDeleteDialog,
@@ -94,7 +91,9 @@ const LessonsPage: NextPage<Props> = ({ lessons }) => {
         <Typography variant="h1">Lecciones</Typography>
         <Button onClick={handleNew}>Crear lección</Button>
       </Stack>
-      {lessons.length === 0 ? (
+      {isLoading ? (
+        <Loader />
+      ) : lessons.length === 0 ? (
         <Typography variant="body1" marginY={2}>
           No hay lecciones registradas
         </Typography>
@@ -119,16 +118,6 @@ const LessonsPage: NextPage<Props> = ({ lessons }) => {
       />
     </Layout>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const lessons = await getLessons();
-
-  return {
-    props: {
-      lessons,
-    },
-  };
 };
 
 export default LessonsPage;
