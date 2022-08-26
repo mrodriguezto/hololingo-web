@@ -28,11 +28,11 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/login',
   },
-  // session: {
-  //   maxAge: 2592000, // 30d
-  //   strategy: 'jwt',
-  //   updateAge: 86400, // update session after 1d
-  // },
+  session: {
+    maxAge: 2592000, // 30d
+    strategy: 'jwt',
+    updateAge: 86400, // update session after 1d
+  },
 
   callbacks: {
     async jwt({ token, account, user }) {
