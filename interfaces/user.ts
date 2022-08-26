@@ -1,11 +1,13 @@
-export interface IUser {
-  _id: string;
+export interface INewUser {
   name: string;
   email: string;
-  password?: string;
   role: 'admin' | 'user';
-  issuer: string;
+  password?: string;
   score: number;
+}
+export interface IUser extends INewUser {
+  _id: string;
+  issuer: string;
   createdAt: string;
   updatedAt: string;
 }
