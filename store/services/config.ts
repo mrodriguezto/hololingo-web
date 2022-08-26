@@ -2,7 +2,7 @@ import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
 
 export const baseQuery = (path: string) =>
   fetchBaseQuery({
-    baseUrl: String(process.env.API_URL || 'http://localhost:3000/api').concat(path),
+    baseUrl: String(process.env.API_URL || '/api').concat(path),
   });
 
 export const providesList = <R extends { _id: string | number }[], T extends string>(

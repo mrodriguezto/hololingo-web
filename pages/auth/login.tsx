@@ -96,21 +96,21 @@ const LoginPage: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
-  const token = await getToken({ req });
+// export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+//   const token = await getToken({ req });
 
-  if (token) {
-    return {
-      redirect: {
-        destination: '/dashboard',
-        permanent: false,
-      },
-    };
-  }
+//   if (token) {
+//     return {
+//       redirect: {
+//         destination: '/dashboard',
+//         permanent: false,
+//       },
+//     };
+//   }
 
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+// };
 
 export default LoginPage;

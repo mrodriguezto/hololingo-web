@@ -1,9 +1,9 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 import { checkUserEmailPassword } from 'api/functions/users';
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     Credentials({
@@ -28,11 +28,11 @@ export default NextAuth({
   pages: {
     signIn: '/auth/login',
   },
-  session: {
-    maxAge: 2592000, // 30d
-    strategy: 'jwt',
-    updateAge: 86400, // update session after 1d
-  },
+  // session: {
+  //   maxAge: 2592000, // 30d
+  //   strategy: 'jwt',
+  //   updateAge: 86400, // update session after 1d
+  // },
 
   callbacks: {
     async jwt({ token, account, user }) {
@@ -55,4 +55,6 @@ export default NextAuth({
       return session;
     },
   },
-});
+};
+
+export default NextAuth(authOptions);
