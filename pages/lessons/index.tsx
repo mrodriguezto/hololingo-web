@@ -1,26 +1,57 @@
 import type { NextPage } from 'next';
 import { Button, Stack, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 
 import Layout from 'layout';
-import useLessonDialog from 'hooks/useLessonDialog';
+import { useLessons, useLessonDialog } from 'hooks';
 import LessonDialog from 'components/lessons/LessonDialog';
 import LessonsTable from 'components/lessons/LessonsTable';
-import { useLessons } from 'hooks';
-import { INewLesson } from '../../interfaces/lesson';
-import { create } from '@mui/material/styles/createTransitions';
+import { INewLesson } from 'interfaces';
 
 const LessonsPage: NextPage = () => {
-  const {lessons, isLoadingLessons, createLesson} = useLessons(); // prettier-ignore
-  const { openLessonDialog, handleOpenLessonDialog, handleCloseLessonDialog } = useLessonDialog(); // prettier-ignore
+  const {lessons, isLoadingLessons, createLesson, deleteLesson, updateLesson} = useLessons(); // prettier-ignore
+  const { isLessonDialogOpened, openLessonDialog, closeLessonDialog } = useLessonDialog(); // prettier-ignore
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleNew = () => {
-    handleOpenLessonDialog();
+    openLessonDialog();
   };
 
   const handleCreateLesson = (data: INewLesson) => {
-    createLesson(data).then(() => {
-      handleCloseLessonDialog();
-    });
+    createLesson(data)
+      .then(() => {
+        closeLessonDialog();
+        enqueueSnackbar('Lección creada', { variant: 'success' });
+      })
+      .catch(() => {
+        enqueueSnackbar('Algo salío mal :(', {
+          variant: 'error',
+        });
+      });
+  };
+
+  const handleDeleteLesson = (id: string) => {
+    deleteLesson(id)
+      .then(() => {
+        enqueueSnackbar('Lección eliminada', { variant: 'success' });
+      })
+      .catch(() => {
+        enqueueSnackbar('Algo salío mal :(', {
+          variant: 'error',
+        });
+      });
+  };
+
+  const handleUpdateLesson = (id: string, data: INewLesson) => {
+    updateLesson(id, data)
+      .then(() => {
+        enqueueSnackbar('Lección actualizada', { variant: 'success' });
+      })
+      .catch(() => {
+        enqueueSnackbar('Algo salío mal :(', {
+          variant: 'error',
+        });
+      });
   };
 
   return (
@@ -35,12 +66,16 @@ const LessonsPage: NextPage = () => {
         <Button onClick={handleNew}>Crear lección</Button>
       </Stack>
 
-      <LessonsTable lessons={lessons} isLoading={isLoadingLessons} />
+      <LessonsTable
+        lessons={lessons}
+        isLoading={isLoadingLessons}
+        deleteLesson={handleDeleteLesson}
+        updateLesson={handleUpdateLesson}
+      />
 
       <LessonDialog
-        open={openLessonDialog}
-        handleClose={handleCloseLessonDialog}
-        // TODO: implement save
+        open={isLessonDialogOpened}
+        handleClose={closeLessonDialog}
         handleSave={handleCreateLesson}
       />
     </Layout>

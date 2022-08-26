@@ -3,23 +3,25 @@ import { Delete, Edit } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-grid';
 
-import { useLessons, useLessonDialog, useDeleteDialog } from 'hooks';
+import { useLessonDialog, useDeleteDialog } from 'hooks';
 import DeleteDialog from 'components/DeleteDialog';
 import Loader from 'components/Loader';
 import Table from 'components/Table';
-import { ILesson, IExtendedLesson } from 'interfaces';
+import { ILesson, IExtendedLesson, INewLesson } from 'interfaces';
 import formatDate from 'utils/formatDate';
 import LessonDialog from './LessonDialog';
 
 type Props = {
   lessons: ILesson[];
   isLoading: boolean;
+  deleteLesson: (id: string) => void;
+  updateLesson: (id: string, data: INewLesson) => void;
 };
 
-const LessonsTable = ({ lessons, isLoading }: Props) => {
+const LessonsTable = ({ lessons, isLoading, deleteLesson, updateLesson }: Props) => {
   const [currentLesson, setCurrentLesson] = useState<IExtendedLesson>();
-  const { handleCloseDeleteDialog, handleOpenDeleteDialog, openDeleteDialog } = useDeleteDialog(); // prettier-ignore
-  const { openLessonDialog, handleOpenLessonDialog, handleCloseLessonDialog } = useLessonDialog(); // prettier-ignore
+  const { isDeleteDialogOpened, openDeleteDialog, closeDeleteDialog } = useDeleteDialog(); // prettier-ignore
+  const { isLessonDialogOpened, openLessonDialog, closeLessonDialog } = useLessonDialog(); // prettier-ignore
 
   const columns: GridColumns = [
     { field: 'id', headerName: 'N°', width: 50 },
@@ -44,17 +46,25 @@ const LessonsTable = ({ lessons, isLoading }: Props) => {
           key={params.id}
           icon={<Delete color="error" />}
           label="Delete"
-          onClick={handleOpenDeleteDialog}
+          onClick={() => handleDelete(params.row._id)}
         />,
       ],
     },
   ];
 
-  const handleEdit = (id: string) => {
+  const changeCurrentLesson = (id: string) => {
     const lesson = rows.find(lesson => lesson._id === id);
-
     setCurrentLesson(lesson);
-    handleOpenLessonDialog();
+  };
+
+  const handleDelete = (id: string) => {
+    changeCurrentLesson(id);
+    openDeleteDialog();
+  };
+
+  const handleEdit = (id: string) => {
+    changeCurrentLesson(id);
+    openLessonDialog();
   };
 
   const rows = lessons.map((lesson, index) => ({
@@ -81,17 +91,23 @@ const LessonsTable = ({ lessons, isLoading }: Props) => {
       <DeleteDialog
         title="Eliminar Lección"
         description="¿Desea eliminar la lección?"
-        open={openDeleteDialog}
-        handleClose={handleCloseDeleteDialog}
-        handleConfirm={() => {}}
+        open={isDeleteDialogOpened}
+        handleClose={closeDeleteDialog}
+        handleConfirm={() => {
+          deleteLesson(currentLesson!._id);
+          closeDeleteDialog();
+        }}
       />
 
       <LessonDialog
-        open={openLessonDialog}
-        handleClose={handleCloseLessonDialog}
+        open={isLessonDialogOpened}
+        handleClose={closeLessonDialog}
         lesson={currentLesson}
         // TODO: implement save
-        handleSave={data => {}}
+        handleSave={data => {
+          updateLesson(currentLesson!._id, data);
+          closeLessonDialog();
+        }}
       />
     </>
   );

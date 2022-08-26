@@ -1,20 +1,20 @@
 import { useState } from 'react';
 
 const useDeleteDialog = () => {
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [isDeleteDialogOpened, setOpenDeleteDialog] = useState(false);
 
-  const handleOpenDeleteDialog = () => {
+  const openDeleteDialog = () => {
     setOpenDeleteDialog(true);
   };
 
-  const handleCloseDeleteDialog = () => {
+  const closeDeleteDialog = () => {
     setOpenDeleteDialog(false);
   };
 
   return {
+    isDeleteDialogOpened,
     openDeleteDialog,
-    handleOpenDeleteDialog,
-    handleCloseDeleteDialog,
+    closeDeleteDialog,
   };
 };
 

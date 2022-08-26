@@ -1,22 +1,22 @@
 import { useState } from 'react';
 
 const useLessonDialog = () => {
-  const [openLessonDialog, setOpenLessonDialog] = useState(false);
+  const [isLessonDialogOpened, setOpenLessonDialog] = useState(false);
 
   // Lesson Dialog
 
-  const handleOpenLessonDialog = () => {
+  const openLessonDialog = () => {
     setOpenLessonDialog(true);
   };
 
-  const handleCloseLessonDialog = () => {
+  const closeLessonDialog = () => {
     setOpenLessonDialog(false);
   };
 
   return {
+    isLessonDialogOpened,
     openLessonDialog,
-    handleOpenLessonDialog,
-    handleCloseLessonDialog,
+    closeLessonDialog,
   };
 };
 

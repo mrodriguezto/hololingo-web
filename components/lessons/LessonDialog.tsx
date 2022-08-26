@@ -25,13 +25,13 @@ const LessonDialog = ({ open, lesson, handleClose, handleSave }: Props) => {
     defaultValues: {},
   });
 
-  const onSubmit: SubmitHandler<INewLesson> = data => {
-    handleSave(data);
-  };
-
   useEffect(() => {
     if (lesson) reset(lesson);
   }, [lesson, reset]);
+
+  const onSubmit: SubmitHandler<INewLesson> = data => {
+    handleSave(data);
+  };
 
   return (
     <Dialog fullWidth onClose={handleClose} open={open}>
