@@ -19,6 +19,14 @@ const Navbar = () => {
             <Typography variant="h6" marginLeft={1}>
               HoloLingo
             </Typography>
+            <Typography
+              fontSize={14}
+              fontWeight={400}
+              marginLeft={0.8}
+              marginTop={0.4}
+            >
+              Admin
+            </Typography>
           </Link>
         </NextLink>
         <Box sx={{ flex: 1 }} />

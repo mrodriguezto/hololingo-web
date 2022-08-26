@@ -7,20 +7,21 @@ import { useLessons, useLessonDialog } from 'hooks';
 import LessonDialog from 'components/lessons/LessonDialog';
 import LessonsTable from 'components/lessons/LessonsTable';
 import { INewLesson } from 'interfaces';
+import useDialog from 'hooks/useDialog';
 
 const LessonsPage: NextPage = () => {
   const {lessons, isLoadingLessons, createLesson, deleteLesson, updateLesson} = useLessons(); // prettier-ignore
-  const { isLessonDialogOpened, openLessonDialog, closeLessonDialog } = useLessonDialog(); // prettier-ignore
+  const { isDialogOpened, openDialog, closeDialog } = useDialog();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleNew = () => {
-    openLessonDialog();
+    openDialog();
   };
 
   const handleCreateLesson = (data: INewLesson) => {
     createLesson(data)
       .then(() => {
-        closeLessonDialog();
+        closeDialog();
         enqueueSnackbar('Lección creada', { variant: 'success' });
       })
       .catch(() => {
@@ -74,8 +75,8 @@ const LessonsPage: NextPage = () => {
       />
 
       <LessonDialog
-        open={isLessonDialogOpened}
-        handleClose={closeLessonDialog}
+        open={isDialogOpened}
+        handleClose={closeDialog}
         handleSave={handleCreateLesson}
       />
     </Layout>

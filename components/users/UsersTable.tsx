@@ -6,36 +6,37 @@ import { GridActionsCellItem, GridColumns, GridRowParams } from '@mui/x-data-gri
 import DeleteDialog from 'components/DeleteDialog';
 import Loader from 'components/Loader';
 import Table from 'components/Table';
-import { ILesson, IExtendedLesson, INewLesson } from 'interfaces';
-import formatDate from 'utils/formatDate';
-import LessonDialog from './LessonDialog';
 import useDialog from 'hooks/useDialog';
+import { IExtendedUser, INewUser, IUser } from 'interfaces';
+import formatDate from 'utils/formatDate';
+import UserDialog from './UserDialog';
 
 type Props = {
-  lessons: ILesson[];
+  users: IUser[];
   isLoading: boolean;
-  deleteLesson: (id: string) => void;
-  updateLesson: (id: string, data: INewLesson) => void;
+  deleteUser: (id: string) => void;
+  updateUser: (id: string, data: INewUser) => void;
 };
 
-const LessonsTable = ({ lessons, isLoading, deleteLesson, updateLesson }: Props) => {
-  const [currentLesson, setCurrentLesson] = useState<IExtendedLesson>();
+const UsersTable = ({ users, isLoading, deleteUser, updateUser }: Props) => {
+  const [currentUser, setCurrentUser] = useState<IExtendedUser>();
   const { isDialogOpened:isDeleteDialogOpened, openDialog:openDeleteDialog, closeDialog:closeDeleteDialog } = useDialog(); // prettier-ignore
-  const { isDialogOpened:isLessonDialogOpened, openDialog:openLessonDialog, closeDialog:closeLessonDialog } = useDialog(); // prettier-ignore
+  const { isDialogOpened:isUserDialogOpened, openDialog:openUserDialog, closeDialog:closeUserDialog } = useDialog(); // prettier-ignore
 
   const columns: GridColumns = [
     { field: 'id', headerName: 'N°', width: 50 },
     { field: '_id', headerName: 'ID', width: 220 },
-    { field: 'title', headerName: 'Título', width: 160 },
-    { field: 'description', headerName: 'Descripción', width: 250 },
-    { field: 'category_name', headerName: 'Categoría', width: 120 },
+    { field: 'name', headerName: 'Nombre', width: 160 },
+    { field: 'email', headerName: 'Correo', width: 250 },
+    { field: 'issuer', headerName: 'Origen', width: 120 },
+    { field: 'role', headerName: 'Rol', width: 120 },
     { field: 'createdAt', headerName: 'Fecha creada', width: 150 },
     { field: 'updatedAt', headerName: 'Fecha actualizada', width: 150 },
     {
       field: 'actions',
       type: 'actions',
       width: 80,
-      getActions: (params: GridRowParams<ILesson>) => [
+      getActions: (params: GridRowParams<IUser>) => [
         <GridActionsCellItem
           key={params.id}
           icon={<Edit />}
@@ -52,35 +53,35 @@ const LessonsTable = ({ lessons, isLoading, deleteLesson, updateLesson }: Props)
     },
   ];
 
-  const changeCurrentLesson = (id: string) => {
-    const lesson = rows.find(lesson => lesson._id === id);
-    setCurrentLesson(lesson);
+  const changeCurrentUser = (id: string) => {
+    const user = rows.find(user => user._id === id);
+    setCurrentUser(user);
   };
 
   const handleDelete = (id: string) => {
-    changeCurrentLesson(id);
+    changeCurrentUser(id);
     openDeleteDialog();
   };
 
   const handleEdit = (id: string) => {
-    changeCurrentLesson(id);
-    openLessonDialog();
+    changeCurrentUser(id);
+    openUserDialog();
   };
 
-  const rows = lessons.map((lesson, index) => ({
+  const rows = users.map((user, index) => ({
+    ...user,
     id: index + 1,
-    ...lesson,
-    createdAt: formatDate.format(lesson.createdAt),
-    updatedAt: formatDate.format(lesson.updatedAt),
+    createdAt: formatDate.format(user.createdAt),
+    updatedAt: formatDate.format(user.updatedAt),
   }));
 
   if (isLoading) {
     return <Loader />;
   }
 
-  if (lessons.length == 0) {
+  if (users.length == 0) {
     <Typography variant="body1" marginY={2}>
-      No hay lecciones registradas
+      No hay usuarios registrados wadafa
     </Typography>;
   }
 
@@ -94,22 +95,22 @@ const LessonsTable = ({ lessons, isLoading, deleteLesson, updateLesson }: Props)
         open={isDeleteDialogOpened}
         handleClose={closeDeleteDialog}
         handleConfirm={() => {
-          deleteLesson(currentLesson!._id);
+          deleteUser(currentUser!._id);
           closeDeleteDialog();
         }}
       />
 
-      <LessonDialog
-        open={isLessonDialogOpened}
-        handleClose={closeLessonDialog}
-        lesson={currentLesson}
+      <UserDialog
+        open={isUserDialogOpened}
+        handleClose={closeUserDialog}
+        user={currentUser}
         handleSave={data => {
-          updateLesson(currentLesson!._id, data);
-          closeLessonDialog();
+          updateUser(currentUser!._id, data);
+          closeUserDialog();
         }}
       />
     </>
   );
 };
 
-export default LessonsTable;
+export default UsersTable;

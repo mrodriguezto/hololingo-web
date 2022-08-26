@@ -19,8 +19,6 @@ type Props = {
 };
 
 const LessonDialog = ({ open, lesson, handleClose, handleSave }: Props) => {
-  console.log(lesson);
-
   const { register, handleSubmit, reset } = useForm<INewLesson>({
     defaultValues: {},
   });
@@ -36,7 +34,7 @@ const LessonDialog = ({ open, lesson, handleClose, handleSave }: Props) => {
   return (
     <Dialog fullWidth onClose={handleClose} open={open}>
       <DialogTitle>
-        {lesson ? `Editar Lección ${lesson!._id}` : 'Nueva Lección'}
+        {lesson ? `Editar lección ${lesson.title}` : 'Nueva lección'}
       </DialogTitle>
       <DialogContent>
         <Stack spacing={3} paddingY={2}>

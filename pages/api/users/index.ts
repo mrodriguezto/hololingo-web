@@ -41,10 +41,16 @@ type RegisterBody = {
   email: string;
   password: string;
   name: string;
+  role: string;
 };
 
 async function registerUser(req: NextApiRequest, res: NextApiResponse<Data>) {
-  const { email = '', password = '', name = '' } = req.body as RegisterBody;
+  const {
+    email = '',
+    password = '',
+    name = '',
+    role = 'user',
+  } = req.body as RegisterBody;
 
   // Validations
 
@@ -81,7 +87,7 @@ async function registerUser(req: NextApiRequest, res: NextApiResponse<Data>) {
   const newUser = new User({
     email: email.toLocaleLowerCase(),
     password: bcrypt.hashSync(password),
-    role: 'user',
+    role,
     name,
     score: 0,
     issuer: 'admin-platform',

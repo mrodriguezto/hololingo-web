@@ -4,7 +4,7 @@ import {
   useGetLessonsQuery,
   useUpdateLessonMutation,
 } from 'store/services/lessons';
-import { INewLesson } from 'interfaces/lesson';
+import { INewLesson } from 'interfaces';
 
 const useLessons = () => {
   const { data: lessons = [], isLoading } = useGetLessonsQuery();
