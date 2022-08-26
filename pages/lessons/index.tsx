@@ -5,12 +5,22 @@ import Layout from 'layout';
 import useLessonDialog from 'hooks/useLessonDialog';
 import LessonDialog from 'components/lessons/LessonDialog';
 import LessonsTable from 'components/lessons/LessonsTable';
+import { useLessons } from 'hooks';
+import { INewLesson } from '../../interfaces/lesson';
+import { create } from '@mui/material/styles/createTransitions';
 
 const LessonsPage: NextPage = () => {
+  const {lessons, isLoadingLessons, createLesson} = useLessons(); // prettier-ignore
   const { openLessonDialog, handleOpenLessonDialog, handleCloseLessonDialog } = useLessonDialog(); // prettier-ignore
 
   const handleNew = () => {
     handleOpenLessonDialog();
+  };
+
+  const handleCreateLesson = (data: INewLesson) => {
+    createLesson(data).then(() => {
+      handleCloseLessonDialog();
+    });
   };
 
   return (
@@ -25,13 +35,13 @@ const LessonsPage: NextPage = () => {
         <Button onClick={handleNew}>Crear lección</Button>
       </Stack>
 
-      <LessonsTable />
+      <LessonsTable lessons={lessons} isLoading={isLoadingLessons} />
 
       <LessonDialog
         open={openLessonDialog}
         handleClose={handleCloseLessonDialog}
         // TODO: implement save
-        handleSave={data => {}}
+        handleSave={handleCreateLesson}
       />
     </Layout>
   );

@@ -11,9 +11,13 @@ import { ILesson, IExtendedLesson } from 'interfaces';
 import formatDate from 'utils/formatDate';
 import LessonDialog from './LessonDialog';
 
-const LessonsTable = () => {
+type Props = {
+  lessons: ILesson[];
+  isLoading: boolean;
+};
+
+const LessonsTable = ({ lessons, isLoading }: Props) => {
   const [currentLesson, setCurrentLesson] = useState<IExtendedLesson>();
-  const {isLoadingLessons, lessons, updateLesson} = useLessons(); // prettier-ignore
   const { handleCloseDeleteDialog, handleOpenDeleteDialog, openDeleteDialog } = useDeleteDialog(); // prettier-ignore
   const { openLessonDialog, handleOpenLessonDialog, handleCloseLessonDialog } = useLessonDialog(); // prettier-ignore
 
@@ -60,7 +64,7 @@ const LessonsTable = () => {
     updatedAt: formatDate.format(lesson.updatedAt),
   }));
 
-  if (isLoadingLessons) {
+  if (isLoading) {
     return <Loader />;
   }
 
