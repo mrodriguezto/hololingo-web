@@ -4,7 +4,6 @@ import db from 'api/db';
 import User from 'api/models/User';
 import { IUser } from 'interfaces';
 import { validations } from 'utils/validations';
-import md5 from 'md5';
 
 type Data = { message: string } | IUser | IUser[];
 
