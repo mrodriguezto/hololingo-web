@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import db from 'api/db';
 import User from 'api/models/User';
+import md5 from 'md5';
 
 export const checkUserEmailPassword = async (email: string, password: string) => {
   await db.connect();
@@ -13,7 +14,7 @@ export const checkUserEmailPassword = async (email: string, password: string) =>
     return null;
   }
 
-  if (!bcrypt.compareSync(password, user.password!)) return null;
+  if (password === user.password!) return null;
 
   return user;
 };

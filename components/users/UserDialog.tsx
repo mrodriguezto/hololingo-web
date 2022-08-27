@@ -42,8 +42,20 @@ const UserDialog = ({ open, user, handleClose, handleSave }: Props) => {
       </DialogTitle>
       <DialogContent>
         <Stack spacing={3} paddingY={2}>
-          <TextField label="Nombres" type="text" fullWidth {...register('name')} />
-          <TextField label="Correo" type="email" fullWidth {...register('email')} />
+          <TextField
+            label="Nombres"
+            type="text"
+            fullWidth
+            {...register('name')}
+            disabled={!!user}
+          />
+          <TextField
+            label="Correo"
+            type="email"
+            fullWidth
+            {...register('email')}
+            disabled={!!user}
+          />
           <TextField
             label="Contraseña"
             type="password"

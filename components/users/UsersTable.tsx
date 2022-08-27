@@ -90,8 +90,8 @@ const UsersTable = ({ users, isLoading, deleteUser, updateUser }: Props) => {
       <Table rows={rows} columns={columns} />
 
       <DeleteDialog
-        title="Eliminar Lección"
-        description="¿Desea eliminar la lección?"
+        title="Eliminar Usuario"
+        description="¿Desea eliminar al usuario?"
         open={isDeleteDialogOpened}
         handleClose={closeDeleteDialog}
         handleConfirm={() => {
