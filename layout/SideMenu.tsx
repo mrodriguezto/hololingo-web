@@ -55,7 +55,7 @@ const SideMenu = () => {
         </Box>
 
         <List>
-          <ListItem button onClick={() => navigateTo('/home')}>
+          <ListItem button onClick={() => navigateTo('/dashboard')}>
             <ListItemIcon>
               <DashboardOutlined />
             </ListItemIcon>
