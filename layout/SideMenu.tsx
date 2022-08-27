@@ -55,17 +55,11 @@ const SideMenu = () => {
         </Box>
 
         <List>
-          <ListItem button onClick={() => navigateTo('/profile')}>
-            <ListItemIcon>
-              <AccountCircleOutlined />
-            </ListItemIcon>
-            <ListItemText primary={'Perfil'} />
-          </ListItem>
-          <ListItem button onClick={() => navigateTo('/dashboard')}>
+          <ListItem button onClick={() => navigateTo('/home')}>
             <ListItemIcon>
               <DashboardOutlined />
             </ListItemIcon>
-            <ListItemText primary={'Dashboard'} />
+            <ListItemText primary={'Inicio'} />
           </ListItem>
 
           <ListItem button onClick={() => navigateTo('/users')}>
