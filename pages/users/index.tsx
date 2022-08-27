@@ -22,7 +22,7 @@ const UsersPage: NextPage = () => {
     createUser(data)
       .then(() => {
         closeDialog();
-        enqueueSnackbar('Lección creada', { variant: 'success' });
+        enqueueSnackbar('Usuario creado', { variant: 'success' });
       })
       .catch(() => {
         enqueueSnackbar('Algo salío mal :(', {
@@ -34,7 +34,7 @@ const UsersPage: NextPage = () => {
   const handleDeleteUser = (id: string) => {
     deleteUser(id)
       .then(() => {
-        enqueueSnackbar('Lección eliminada', { variant: 'success' });
+        enqueueSnackbar('Usuario eliminado', { variant: 'success' });
       })
       .catch(() => {
         enqueueSnackbar('Algo salío mal :(', {
@@ -46,7 +46,7 @@ const UsersPage: NextPage = () => {
   const handleUpdateUser = (id: string, data: INewUser) => {
     updateUser(id, data)
       .then(() => {
-        enqueueSnackbar('Lección actualizada', { variant: 'success' });
+        enqueueSnackbar('Usuario actualizado', { variant: 'success' });
       })
       .catch(() => {
         enqueueSnackbar('Algo salío mal :(', {
